@@ -29,6 +29,19 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "${env:PORTABLEAPPS}/msys64/mingw32/bin/gdb.exe"
+        },
+        {
+            "name": "hsm_engine/program.exe",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/hsm_engine/program.exe",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "${env:PORTABLEAPPS}/msys64/mingw32/bin/gdb.exe"
         }
     ]
 }
