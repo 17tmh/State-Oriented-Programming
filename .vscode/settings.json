@@ -1,0 +1,11 @@
+{
+    "terminal.integrated.env.windows": {
+        "LANG": "en_US.UTF-8",
+        "PATH": "${env:PORTABLEAPPS}/msys64/usr/bin;${env:PORTABLEAPPS}/msys64/mingw32/bin;${env:Path}"
+    },
+    "editor.formatOnSave": true,
+    "files.associations": {
+        "*.h": "c",
+        "*.c": "c"
+    }
+}
