@@ -8,7 +8,8 @@
 #include <assert.h>
 
 typedef struct Watch Watch;
-struct Watch {
+struct Watch
+{
     Hsm super;
     State timekeeping, time, date;
     State setting, hour, minute, day, month;
@@ -16,7 +17,8 @@ struct Watch {
     int tsec, tmin, thour, dday, dmonth;
 };
 
-enum WatchEvents {
+enum WatchEvents
+{
     Watch_MODE_EVT,
     Watch_SET_EVT,
     Watch_TICK_EVT
@@ -25,28 +27,35 @@ enum WatchEvents {
 /* lookup table for the days of a month */
 static int const day_of_month_lut[] = {
     0, /* unused month #0 */
-    31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
-};
+    31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-void WatchShowTime(Watch *me) {
+void WatchShowTime(Watch *me)
+{
     printf("time: %2d:%02d:%02d",
-    me->thour, me->tmin, me->tsec);
+           me->thour, me->tmin, me->tsec);
 }
 
-void WatchShowDate(Watch *me) {
+void WatchShowDate(Watch *me)
+{
     printf("date: %02d-%02d", me->dmonth, me->dday);
 }
 
-void WatchTick(Watch *me) {
-    if (++me->tsec == 60) {
+void WatchTick(Watch *me)
+{
+    if (++me->tsec == 60)
+    {
         me->tsec = 0;
-        if (++me->tmin == 60) {
+        if (++me->tmin == 60)
+        {
             me->tmin = 0;
-            if (++me->thour == 24) {
+            if (++me->thour == 24)
+            {
                 me->thour = 0;
-                if (++me->dday > day_of_month_lut[me->dmonth]) {
+                if (++me->dday > day_of_month_lut[me->dmonth])
+                {
                     me->dday = 1;
-                    if (++me->dmonth == 13) {
+                    if (++me->dmonth == 13)
+                    {
                         me->dmonth = 1;
                     }
                 }
@@ -55,8 +64,10 @@ void WatchTick(Watch *me) {
     }
 }
 
-Msg const *Watch_top(Watch *me, Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch_top(Watch *me, Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case START_EVT:
         STATE_START(me, &me->setting);
         return 0;
@@ -64,8 +75,10 @@ Msg const *Watch_top(Watch *me, Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch_timekeeping(Watch *me, Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch_timekeeping(Watch *me, Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case START_EVT:
         STATE_START(me, me->timekeepingHist);
         return 0;
@@ -84,8 +97,10 @@ Msg const *Watch_timekeeping(Watch *me, Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch_time(Watch *me, Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch_time(Watch *me, Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case ENTRY_EVT:
         WatchShowTime(me);
         return 0;
@@ -102,8 +117,10 @@ Msg const *Watch_time(Watch *me, Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch_date(Watch *me, Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch_date(Watch *me, Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case ENTRY_EVT:
         WatchShowDate(me);
         return 0;
@@ -120,8 +137,10 @@ Msg const *Watch_date(Watch *me, Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch_setting(Watch *me, Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch_setting(Watch *me, Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case START_EVT:
         STATE_START(me, &me->hour);
         printf("Watch::setting-START->hour;");
@@ -130,10 +149,13 @@ Msg const *Watch_setting(Watch *me, Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch_hour(Watch *me, Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch_hour(Watch *me, Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case Watch_MODE_EVT:
-        if (++me->thour == 60) {
+        if (++me->thour == 60)
+        {
             me->thour = 0;
         }
         WatchShowTime(me);
@@ -146,10 +168,13 @@ Msg const *Watch_hour(Watch *me, Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch_minute(Watch *me, Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch_minute(Watch *me, Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case Watch_MODE_EVT:
-        if (++me->tmin == 60) {
+        if (++me->tmin == 60)
+        {
             me->tmin = 0;
         }
         WatchShowTime(me);
@@ -162,10 +187,13 @@ Msg const *Watch_minute(Watch *me, Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch_day(Watch *me, Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch_day(Watch *me, Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case Watch_MODE_EVT:
-        if (++me->dday > day_of_month_lut[me->dmonth]) {
+        if (++me->dday > day_of_month_lut[me->dmonth])
+        {
             me->dday = 1;
         }
         WatchShowDate(me);
@@ -178,10 +206,13 @@ Msg const *Watch_day(Watch *me, Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch_month(Watch *me, Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch_month(Watch *me, Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case Watch_MODE_EVT:
-        if (++me->dmonth > 12 ) {
+        if (++me->dmonth > 12)
+        {
             me->dmonth = 1;
         }
         WatchShowDate(me);
@@ -194,7 +225,8 @@ Msg const *Watch_month(Watch *me, Msg const *msg) {
     return msg;
 }
 
-void WatchCtor(Watch *me) {
+void WatchCtor(Watch *me)
+{
     HsmCtor((Hsm *)me, "Watch", (EvtHndlr)Watch_top);
     StateCtor(&me->timekeeping, "timekeeping",
               &((Hsm *)me)->top, (EvtHndlr)Watch_timekeeping);
@@ -219,12 +251,12 @@ void WatchCtor(Watch *me) {
 }
 
 const Msg watchMsg[] = {
-    { Watch_MODE_EVT },
-    { Watch_SET_EVT  },
-    { Watch_TICK_EVT }
-};
+    {Watch_MODE_EVT},
+    {Watch_SET_EVT},
+    {Watch_TICK_EVT}};
 
-int main() {
+int main()
+{
     Watch watch;
 
     printf("Enter:\n"
@@ -235,12 +267,14 @@ int main() {
 
     WatchCtor(&watch);
     HsmOnStart((Hsm *)&watch);
-    for (;;)  {
+    for (;;)
+    {
         char c;
         printf("\nEvent<-");
         c = getc(stdin);
         getc(stdin);
-        if (c < '0' || '2' < c) {
+        if (c < '0' || '2' < c)
+        {
             break;
         }
         HsmOnEvent((Hsm *)&watch, &watchMsg[c - '0']);

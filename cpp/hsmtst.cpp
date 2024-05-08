@@ -12,14 +12,17 @@
 #include <assert.h>
 #include <stdio.h>
 
-class HsmTest : public Hsm {
+class HsmTest : public Hsm
+{
     int myFoo;
+
 protected:
     State s1;
-      State s11;
+    State s11;
     State s2;
-      State s21;
-        State s211;
+    State s21;
+    State s211;
+
 public:
     HsmTest();
     Msg const *topHndlr(Msg const *msg);
@@ -30,12 +33,22 @@ public:
     Msg const *s211Hndlr(Msg const *msg);
 };
 
-enum HsmTestEvents {
-    A_SIG, B_SIG, C_SIG, D_SIG, E_SIG, F_SIG, G_SIG, H_SIG
+enum HsmTestEvents
+{
+    A_SIG,
+    B_SIG,
+    C_SIG,
+    D_SIG,
+    E_SIG,
+    F_SIG,
+    G_SIG,
+    H_SIG
 };
 
-Msg const *HsmTest::topHndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *HsmTest::topHndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case START_EVT:
         printf("top-INIT;");
         STATE_START(&s1);
@@ -54,8 +67,10 @@ Msg const *HsmTest::topHndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *HsmTest::s1Hndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *HsmTest::s1Hndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case START_EVT:
         printf("s1-INIT;");
         STATE_START(&s11);
@@ -90,8 +105,10 @@ Msg const *HsmTest::s1Hndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *HsmTest::s11Hndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *HsmTest::s11Hndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case ENTRY_EVT:
         printf("s11-ENTRY;");
         return 0;
@@ -103,7 +120,8 @@ Msg const *HsmTest::s11Hndlr(Msg const *msg) {
         STATE_TRAN(&s211);
         return 0;
     case H_SIG:
-        if (myFoo) {
+        if (myFoo)
+        {
             printf("s11-H;");
             myFoo = 0;
             return 0;
@@ -113,8 +131,10 @@ Msg const *HsmTest::s11Hndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *HsmTest::s2Hndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *HsmTest::s2Hndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case START_EVT:
         printf("s2-INIT;");
         STATE_START(&s21);
@@ -137,8 +157,10 @@ Msg const *HsmTest::s2Hndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *HsmTest::s21Hndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *HsmTest::s21Hndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case START_EVT:
         printf("s21-INIT;");
         STATE_START(&s211);
@@ -154,7 +176,8 @@ Msg const *HsmTest::s21Hndlr(Msg const *msg) {
         STATE_TRAN(&s211);
         return 0;
     case H_SIG:
-        if (!myFoo) {
+        if (!myFoo)
+        {
             printf("s21-H;");
             myFoo = 1;
             STATE_TRAN(&s21);
@@ -165,8 +188,10 @@ Msg const *HsmTest::s21Hndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *HsmTest::s211Hndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *HsmTest::s211Hndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case ENTRY_EVT:
         printf("s211-ENTRY;");
         return 0;
@@ -186,35 +211,36 @@ Msg const *HsmTest::s211Hndlr(Msg const *msg) {
 }
 
 HsmTest::HsmTest()
-: Hsm("HsmTest",        static_cast<EvtHndlr>(&HsmTest::topHndlr)),
-    s1("s1",     &top,  static_cast<EvtHndlr>(&HsmTest::s1Hndlr)),
-    s11("s11",   &s1,   static_cast<EvtHndlr>(&HsmTest::s11Hndlr)),
-    s2("s2",     &top,  static_cast<EvtHndlr>(&HsmTest::s2Hndlr)),
-    s21("s21",   &s2,   static_cast<EvtHndlr>(&HsmTest::s21Hndlr)),
-    s211("s211", &s21,  static_cast<EvtHndlr>(&HsmTest::s211Hndlr))
+    : Hsm("HsmTest", static_cast<EvtHndlr>(&HsmTest::topHndlr)),
+      s1("s1", &top, static_cast<EvtHndlr>(&HsmTest::s1Hndlr)),
+      s11("s11", &s1, static_cast<EvtHndlr>(&HsmTest::s11Hndlr)),
+      s2("s2", &top, static_cast<EvtHndlr>(&HsmTest::s2Hndlr)),
+      s21("s21", &s2, static_cast<EvtHndlr>(&HsmTest::s21Hndlr)),
+      s211("s211", &s21, static_cast<EvtHndlr>(&HsmTest::s211Hndlr))
 {
     myFoo = 0;
 }
 
 const Msg HsmTestMsg[] = {
-    { A_SIG }, { B_SIG }, { C_SIG }, { D_SIG },
-    { E_SIG }, { F_SIG }, { G_SIG } ,{ H_SIG }
-};
+    {A_SIG}, {B_SIG}, {C_SIG}, {D_SIG}, {E_SIG}, {F_SIG}, {G_SIG}, {H_SIG}};
 
-int main() {
+int main()
+{
     HsmTest hsmTest;
 
     printf("Events:\n"
-        "a-h for triggering events\n"
-        "x to exit\n\n");
+           "a-h for triggering events\n"
+           "x to exit\n\n");
 
     hsmTest.onStart();
-    for (;;) {
+    for (;;)
+    {
         int c;
         printf("\nEvent<-");
         c = getc(stdin);
         getc(stdin);
-        if (c < 'a' || 'h' < c) {
+        if (c < 'a' || 'h' < c)
+        {
             break;
         }
         hsmTest.onEvent(&HsmTestMsg[c - 'a']);

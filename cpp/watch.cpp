@@ -7,11 +7,13 @@
 #include <stdio.h>
 #include <assert.h>
 
-class Watch : public Hsm {
+class Watch : public Hsm
+{
 protected:
     State timekeeping, time, date;
     State setting, hour, minute, day, month;
     State *timekeepingHist;
+
 private:
     int tsec, tmin, thour, dday, dmonth;
 
@@ -31,7 +33,8 @@ public:
     void showDate();
 };
 
-enum WatchEvents {
+enum WatchEvents
+{
     Watch_MODE_EVT,
     Watch_SET_EVT,
     Watch_TICK_EVT
@@ -40,27 +43,34 @@ enum WatchEvents {
 // lookup table for the days of a month
 static int const day_of_month_lut[] = {
     0, /* unused month #0 */
-    31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
-};
+    31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-void Watch::showTime() {
+void Watch::showTime()
+{
     printf("time: %2d:%02d:%02d", thour, tmin, tsec);
 }
 
-void Watch::showDate() {
+void Watch::showDate()
+{
     printf("date: %02d-%02d", dmonth, dday);
 }
 
-void Watch::tick() {
-    if (++tsec == 60) {
+void Watch::tick()
+{
+    if (++tsec == 60)
+    {
         tsec = 0;
-        if (++tmin == 60) {
+        if (++tmin == 60)
+        {
             tmin = 0;
-            if (++thour == 24) {
+            if (++thour == 24)
+            {
                 thour = 0;
-                if (++dday > day_of_month_lut[dmonth]) {
+                if (++dday > day_of_month_lut[dmonth])
+                {
                     dday = 1;
-                    if (++dmonth == 13) {
+                    if (++dmonth == 13)
+                    {
                         dmonth = 1;
                     }
                 }
@@ -69,8 +79,10 @@ void Watch::tick() {
     }
 }
 
-Msg const *Watch::topHndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch::topHndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case START_EVT:
         STATE_START(&setting);
         return 0;
@@ -78,8 +90,10 @@ Msg const *Watch::topHndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch::timekeepingHndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch::timekeepingHndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case START_EVT:
         STATE_START(timekeepingHist);
         return 0;
@@ -98,8 +112,10 @@ Msg const *Watch::timekeepingHndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch::timeHndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch::timeHndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case ENTRY_EVT:
         showTime();
         return 0;
@@ -116,8 +132,10 @@ Msg const *Watch::timeHndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch::dateHndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch::dateHndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case ENTRY_EVT:
         showDate();
         return 0;
@@ -134,8 +152,10 @@ Msg const *Watch::dateHndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch::settingHndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch::settingHndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case START_EVT:
         STATE_START(&hour);
         printf("Watch::setting-START->hour;");
@@ -144,10 +164,13 @@ Msg const *Watch::settingHndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch::hourHndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch::hourHndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case Watch_MODE_EVT:
-        if (++thour == 60) {
+        if (++thour == 60)
+        {
             thour = 0;
         }
         showTime();
@@ -160,10 +183,13 @@ Msg const *Watch::hourHndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch::minuteHndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch::minuteHndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case Watch_MODE_EVT:
-        if (++tmin == 60) {
+        if (++tmin == 60)
+        {
             tmin = 0;
         }
         showTime();
@@ -175,10 +201,13 @@ Msg const *Watch::minuteHndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch::dayHndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch::dayHndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case Watch_MODE_EVT:
-        if (++dday > day_of_month_lut[dmonth]) {
+        if (++dday > day_of_month_lut[dmonth])
+        {
             dday = 1;
         }
         showDate();
@@ -191,10 +220,13 @@ Msg const *Watch::dayHndlr(Msg const *msg) {
     return msg;
 }
 
-Msg const *Watch::monthHndlr(Msg const *msg) {
-    switch (msg->evt) {
+Msg const *Watch::monthHndlr(Msg const *msg)
+{
+    switch (msg->evt)
+    {
     case Watch_MODE_EVT:
-        if (++dmonth > 12 ) {
+        if (++dmonth > 12)
+        {
             dmonth = 1;
         }
         showDate();
@@ -208,27 +240,27 @@ Msg const *Watch::monthHndlr(Msg const *msg) {
 }
 
 Watch::Watch()
-  : Hsm("Watch",                     static_cast<EvtHndlr>(&Watch::topHndlr)),
-    timekeeping("timekeeping", &top, static_cast<EvtHndlr>(&Watch::timekeepingHndlr)),
-    time("time",       &timekeeping, static_cast<EvtHndlr>(&Watch::timeHndlr)),
-    date("date",       &timekeeping, static_cast<EvtHndlr>(&Watch::dateHndlr)),
-    setting("setting", &top,         static_cast<EvtHndlr>(&Watch::settingHndlr)),
-    hour("hour",       &setting,     static_cast<EvtHndlr>(&Watch::hourHndlr)),
-    minute("minute",   &setting,     static_cast<EvtHndlr>(&Watch::minuteHndlr)),
-    day("day",         &setting,     static_cast<EvtHndlr>(&Watch::dayHndlr)),
-    month("month",     &setting,     static_cast<EvtHndlr>(&Watch::monthHndlr)),
-    tsec(0), tmin(0), thour(0), dday(1), dmonth(1)
+    : Hsm("Watch", static_cast<EvtHndlr>(&Watch::topHndlr)),
+      timekeeping("timekeeping", &top, static_cast<EvtHndlr>(&Watch::timekeepingHndlr)),
+      time("time", &timekeeping, static_cast<EvtHndlr>(&Watch::timeHndlr)),
+      date("date", &timekeeping, static_cast<EvtHndlr>(&Watch::dateHndlr)),
+      setting("setting", &top, static_cast<EvtHndlr>(&Watch::settingHndlr)),
+      hour("hour", &setting, static_cast<EvtHndlr>(&Watch::hourHndlr)),
+      minute("minute", &setting, static_cast<EvtHndlr>(&Watch::minuteHndlr)),
+      day("day", &setting, static_cast<EvtHndlr>(&Watch::dayHndlr)),
+      month("month", &setting, static_cast<EvtHndlr>(&Watch::monthHndlr)),
+      tsec(0), tmin(0), thour(0), dday(1), dmonth(1)
 {
     timekeepingHist = &time;
 }
 
 const Msg watchMsg[] = {
-    { Watch_MODE_EVT },
-    { Watch_SET_EVT  },
-    { Watch_TICK_EVT }
-};
+    {Watch_MODE_EVT},
+    {Watch_SET_EVT},
+    {Watch_TICK_EVT}};
 
-int main() {
+int main()
+{
     Watch watch;
 
     printf("Events:\n"
@@ -238,12 +270,14 @@ int main() {
            "3+ to exit\n\n");
 
     watch.onStart();
-    for (;;)  {
+    for (;;)
+    {
         int c;
         printf("\nEvent<-");
         c = getc(stdin);
         getc(stdin);
-        if (c < '0' || '2' < c) {
+        if (c < '0' || '2' < c)
+        {
             break;
         }
         watch.onEvent(&watchMsg[c - '0']);
