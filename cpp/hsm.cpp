@@ -29,7 +29,7 @@
 #include <assert.h>
 #include "hsm.hpp"
 
-static Msg const initMsg = {START_EVT};
+static Msg const initMsg = {INIT_EVT};
 static Msg const entryMsg = {ENTRY_EVT};
 static Msg const exitMsg = {EXIT_EVT};
 #define MAX_STATE_NESTING 8

@@ -89,7 +89,7 @@ protected:
         next = (target_);                   \
     } while (0)
 
-#define START_EVT ((Event)(-1))
+#define INIT_EVT ((Event)(-1))
 #define ENTRY_EVT ((Event)(-2))
 #define EXIT_EVT ((Event)(-3))
 

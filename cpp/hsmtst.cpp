@@ -49,7 +49,7 @@ Msg const *HsmTest::topHndlr(Msg const *msg)
 {
     switch (msg->evt)
     {
-    case START_EVT:
+    case INIT_EVT:
         printf("top-INIT;");
         STATE_START(&s1);
         return 0;
@@ -71,7 +71,7 @@ Msg const *HsmTest::s1Hndlr(Msg const *msg)
 {
     switch (msg->evt)
     {
-    case START_EVT:
+    case INIT_EVT:
         printf("s1-INIT;");
         STATE_START(&s11);
         return 0;
@@ -135,7 +135,7 @@ Msg const *HsmTest::s2Hndlr(Msg const *msg)
 {
     switch (msg->evt)
     {
-    case START_EVT:
+    case INIT_EVT:
         printf("s2-INIT;");
         STATE_START(&s21);
         return 0;
@@ -161,7 +161,7 @@ Msg const *HsmTest::s21Hndlr(Msg const *msg)
 {
     switch (msg->evt)
     {
-    case START_EVT:
+    case INIT_EVT:
         printf("s21-INIT;");
         STATE_START(&s211);
         return 0;

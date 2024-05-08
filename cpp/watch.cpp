@@ -83,7 +83,7 @@ Msg const *Watch::topHndlr(Msg const *msg)
 {
     switch (msg->evt)
     {
-    case START_EVT:
+    case INIT_EVT:
         STATE_START(&setting);
         return 0;
     }
@@ -94,7 +94,7 @@ Msg const *Watch::timekeepingHndlr(Msg const *msg)
 {
     switch (msg->evt)
     {
-    case START_EVT:
+    case INIT_EVT:
         STATE_START(timekeepingHist);
         return 0;
     case EXIT_EVT:
@@ -156,7 +156,7 @@ Msg const *Watch::settingHndlr(Msg const *msg)
 {
     switch (msg->evt)
     {
-    case START_EVT:
+    case INIT_EVT:
         STATE_START(&hour);
         printf("Watch::setting-START->hour;");
         return 0;
