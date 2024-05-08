@@ -5,10 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Starten",
+            "name": "c/hsmtst.exe",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/program.exe",
+            "program": "${workspaceFolder}/c/hsmtst.exe",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "${env:PORTABLEAPPS}/msys64/mingw32/bin/gdb.exe"
+        },
+        {
+            "name": "cpp/hsmtst.exe",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/cpp/hsmtst.exe",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
