@@ -4,7 +4,7 @@
 
 class HsmTest : public Hsm
 {
-    int myFoo;
+    int foo;
 
 protected:
     State s1;
@@ -110,10 +110,10 @@ Msg const *HsmTest::s11Hndlr(Msg const *msg)
         STATE_TRAN(&s211);
         return 0;
     case H_SIG:
-        if (myFoo)
+        if (foo)
         {
             printf("s11-H;");
-            myFoo = 0;
+            foo = 0;
             return 0;
         }
         break;
@@ -166,10 +166,10 @@ Msg const *HsmTest::s21Hndlr(Msg const *msg)
         STATE_TRAN(&s211);
         return 0;
     case H_SIG:
-        if (!myFoo)
+        if (!foo)
         {
             printf("s21-H;");
-            myFoo = 1;
+            foo = 1;
             STATE_TRAN(&s21);
             return 0;
         }
@@ -208,7 +208,7 @@ HsmTest::HsmTest()
       s21("s21", &s2, static_cast<EvtHndlr>(&HsmTest::s21Hndlr)),
       s211("s211", &s21, static_cast<EvtHndlr>(&HsmTest::s211Hndlr))
 {
-    myFoo = 0;
+    foo = 0;
 }
 
 const Msg HsmTestMsg[] = {
