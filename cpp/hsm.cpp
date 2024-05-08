@@ -29,7 +29,7 @@
 #include <assert.h>
 #include "hsm.hpp"
 
-static Msg const startMsg = {START_EVT};
+static Msg const initMsg = {START_EVT};
 static Msg const entryMsg = {ENTRY_EVT};
 static Msg const exitMsg = {EXIT_EVT};
 #define MAX_STATE_NESTING 8
@@ -52,7 +52,7 @@ void Hsm::onStart()
     curr = &top;
     next = 0;
     curr->onEvent(this, &entryMsg);
-    while (curr->onEvent(this, &startMsg), next)
+    while (curr->onEvent(this, &initMsg), next)
     {
         State *entryPath[MAX_STATE_NESTING];
         State **trace = entryPath;
@@ -96,7 +96,7 @@ void Hsm::onEvent(Msg const *msg)
                 }
                 curr = next;
                 next = 0;
-                while (curr->onEvent(this, &startMsg), next)
+                while (curr->onEvent(this, &initMsg), next)
                 {
                     trace = entryPath;
                     *trace = 0;
