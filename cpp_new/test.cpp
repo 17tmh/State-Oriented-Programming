@@ -35,13 +35,13 @@ Msg const *HsmTest::s2Hndlr(Msg const *msg)
     return msg;
 }
 
-// HsmTest::HsmTest()
-//     : Hsm("myhsm", HsmTest::topHndlr),
-//       s1("s1", &top, HsmTest::s1Hndlr),
-//       s1("s2", &top, HsmTest::s2Hndlr)
-// {
-//     foo = 0;
-// }
+HsmTest::HsmTest()
+    : Hsm("myhsm", nullptr),
+      s1("s1", &top, nullptr),
+      s2("s2", &top, nullptr)
+{
+    foo = 0;
+}
 
 // HsmTest::HsmTest()
 //     : Hsm("HsmTest", static_cast<EvtHndlr>(&HsmTest::topHndlr)),
