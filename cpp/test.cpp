@@ -201,12 +201,12 @@ Msg const *HsmTest::s211Hndlr(Msg const *msg)
 }
 
 HsmTest::HsmTest()
-    : Hsm("HsmTest", static_cast<EvtHndlr>(&HsmTest::topHndlr)),
-      s1("s1", &top, static_cast<EvtHndlr>(&HsmTest::s1Hndlr)),
-      s11("s11", &s1, static_cast<EvtHndlr>(&HsmTest::s11Hndlr)),
-      s2("s2", &top, static_cast<EvtHndlr>(&HsmTest::s2Hndlr)),
-      s21("s21", &s2, static_cast<EvtHndlr>(&HsmTest::s21Hndlr)),
-      s211("s211", &s21, static_cast<EvtHndlr>(&HsmTest::s211Hndlr))
+    : Hsm("HsmTest", static_cast<EvtHndlr>(&HsmTest::topHndlr)),     // &HsmTest:: not necessary here
+      s1("s1", &top, static_cast<EvtHndlr>(&HsmTest::s1Hndlr)),      // &HsmTest:: not necessary here
+      s11("s11", &s1, static_cast<EvtHndlr>(&HsmTest::s11Hndlr)),    // &HsmTest:: not necessary here
+      s2("s2", &top, static_cast<EvtHndlr>(&HsmTest::s2Hndlr)),      // &HsmTest:: not necessary here
+      s21("s21", &s2, static_cast<EvtHndlr>(&HsmTest::s21Hndlr)),    // &HsmTest:: not necessary here
+      s211("s211", &s21, static_cast<EvtHndlr>(&HsmTest::s211Hndlr)) // &HsmTest:: not necessary here
 {
     foo = 0;
 }
