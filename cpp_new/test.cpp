@@ -36,9 +36,9 @@ Msg const *HsmTest::s2Hndlr(Msg const *msg)
 }
 
 HsmTest::HsmTest()
-    : Hsm("myhsm", nullptr),
-      s1("s1", &top, nullptr),
-      s2("s2", &top, nullptr)
+    : Hsm("myhsm", reinterpret_cast<EvtHndlr>(&HsmTest::topHndlr)),  // compiles but not good...
+      s1("s1", &top, reinterpret_cast<EvtHndlr>(&HsmTest::s1Hndlr)), // compiles but not good...
+      s2("s2", &top, reinterpret_cast<EvtHndlr>(&HsmTest::s2Hndlr))  // compiles but not good...
 {
     foo = 0;
 }

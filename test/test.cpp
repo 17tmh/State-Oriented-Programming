@@ -3,30 +3,35 @@
 class MyClass
 {
 public:
-    // Default constructor
-    MyClass();
-
-    // Second constructor with parameters
-    MyClass(int value);
+    void memberFunction(int x)
+    {
+        std::cout << "Inside memberFunction: " << x << std::endl;
+    }
 };
 
-// Definition of default constructor
-MyClass::MyClass()
+// Regular function that mimics the behavior of MyClass::memberFunction
+void regularFunction(int x)
 {
-    // Your default constructor code here
-    std::cout << "Default constructor called." << std::endl;
-}
-
-// Definition of second constructor
-MyClass::MyClass(int value)
-{
-    // Your second constructor code here
-    std::cout << "Parameterized constructor called with value: " << value << std::endl;
+    std::cout << "Inside regularFunction: " << x << std::endl;
 }
 
 int main()
 {
-    MyClass obj1;     // Creating an object using default constructor
-    MyClass obj2(10); // Creating an object using second constructor with parameter
+    // Create an object of MyClass
+    MyClass obj;
+
+    // Pointer to member function of MyClass
+    void (MyClass::*memberFunctionPtr)(int) = &MyClass::memberFunction;
+
+    // Call member function through object
+    (obj.*memberFunctionPtr)(10); // Output: Inside memberFunction: 10
+
+    // Cast member function pointer to regular function pointer
+    // Note: This is not safe and may lead to undefined behavior
+    void (*regularFunctionPtr)(int) = reinterpret_cast<void (*)(int)>(&regularFunction);
+
+    // Call regular function (incorrect usage, may lead to undefined behavior)
+    regularFunctionPtr(20); // Output: Inside regularFunction: 20
+
     return 0;
 }
