@@ -63,5 +63,7 @@ int main()
     State s("blablub", nullptr, nullptr);
     Hsm h("lll2", nullptr);
 
+    HsmTest hsmTest;
+
     return 0;
 }
