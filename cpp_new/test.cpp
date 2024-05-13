@@ -22,9 +22,9 @@ public:
 
 int main()
 {
-    printf("Hi c++\n");
+    printf("Hello, World!\n");
 
-    std::cout << "Hello, World!" << std::endl;
+    std::cout << "Hi, C++!" << std::endl;
 
     return 0;
 }
